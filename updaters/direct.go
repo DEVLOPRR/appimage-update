@@ -83,7 +83,7 @@ func downloadFile(filepath string, url string) (err error) {
 
 	progress := progressbar.DefaultBytes(
 		resp.ContentLength,
-		"Downloading: "+url,
+		"Downloading",
 	)
 
 	// Writer the body to file
