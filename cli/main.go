@@ -41,7 +41,6 @@ func main() {
 }
 
 func tryUpdate(target string, updateMethod update.Updater) {
-
 	fmt.Println("Looking for updates of: ", target)
 	updateAvailable, err := updateMethod.Lookup()
 	if err != nil {
