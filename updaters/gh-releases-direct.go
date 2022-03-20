@@ -11,7 +11,6 @@ import (
 
 type GitHubDirect struct {
 	direct Direct
-
 	gitHubUsername   string
 	gitHubRepository string
 	gitHubRelease    string
