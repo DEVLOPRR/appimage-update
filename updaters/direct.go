@@ -1,11 +1,10 @@
 package updaters
 
 import (
-	"fmt"
-
 	"io"
 	"net/http"
 	"os"
+	"os/signal"
 	"path/filepath"
 	"strings"
 
@@ -60,37 +59,36 @@ func (d *Direct) getOutputFileName() string {
 	return filepath.Dir(d.seed) + "/" + fileName
 }
 
-func downloadFile(filepath string, url string) (err error) {
-
-	// Create the file
-	out, err := os.OpenFile(filepath, os.O_RDWR|os.O_CREATE, 0755)
+func downloadFile(filePath string, url string) (err error) {
+	output, err := os.OpenFile(filePath, os.O_RDWR|os.O_CREATE, 0755)
 	if err != nil {
 		return err
 	}
-	defer out.Close()
+	defer output.Close()
 
-	// Get the data
 	resp, err := http.Get(url)
 	if err != nil {
 		return err
 	}
 	defer resp.Body.Close()
 
-	// Check server response
-	if resp.StatusCode != http.StatusOK {
-		return fmt.Errorf("bad status: %s", resp.Status)
-	}
-
-	progress := progressbar.DefaultBytes(
+	bar := progressbar.DefaultBytes(
 		resp.ContentLength,
 		"Downloading",
 	)
 
-	// Writer the body to file
-	_, err = io.Copy(io.MultiWriter(out, progress), resp.Body)
-	if err != nil {
-		return err
-	}
+	go func() {
+		sigchan := make(chan os.Signal, 1)
+		signal.Notify(sigchan, os.Interrupt)
+		<-sigchan
 
-	return nil
+		_ = resp.Body.Close()
+		_ = output.Close()
+		_ = os.Remove(filePath)
+
+		os.Exit(0)
+	}()
+
+	_, err = io.Copy(io.MultiWriter(output, bar), resp.Body)
+	return err
 }
