@@ -8,7 +8,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/AppImageCrafters/appimage-update/util"
+	"github.com/DEVLOPRR/appimage-update/util"
 	"github.com/AppImageCrafters/libzsync-go"
 	"github.com/AppImageCrafters/libzsync-go/chunksmapper"
 	"github.com/AppImageCrafters/libzsync-go/control"
