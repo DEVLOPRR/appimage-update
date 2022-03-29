@@ -1,7 +1,7 @@
 package update
 
 import (
-	"fmt"
+	"errors"
 	"strings"
 
 	"github.com/DEVLOPRR/appimage-update/updaters"
@@ -10,7 +10,6 @@ import (
 
 type Updater interface {
 	Method() string
-
 	Lookup() (updateAvailable bool, err error)
 	Download() (output string, err error)
 }
@@ -46,5 +45,5 @@ func NewUpdateForUpdateString(updateInfoString string, appImagePath string) (Upd
 		return updaters.NewOCSAppImageHubZSync(&updateInfoString, appImagePath)
 	}
 
-	return nil, fmt.Errorf("Invalid updated information: ", updateInfoString)
+	return nil, errors.New("Invalid updated information: " + updateInfoString)
 }
