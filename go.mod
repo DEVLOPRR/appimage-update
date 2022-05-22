@@ -1,4 +1,4 @@
-module github.com/DEVLOPRR/appimage-update
+module github.com/pegvin/appimage-update
 
 go 1.18
 

@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/DEVLOPRR/appimage-update"
+	"github.com/pegvin/appimage-update"
 )
 
 func main() {

@@ -4,8 +4,8 @@ import (
 	"errors"
 	"strings"
 
-	"github.com/DEVLOPRR/appimage-update/updaters"
-	"github.com/DEVLOPRR/appimage-update/util"
+	"github.com/pegvin/appimage-update/updaters"
+	"github.com/pegvin/appimage-update/util"
 )
 
 type Updater interface {
